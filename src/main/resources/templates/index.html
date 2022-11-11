@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<div class="container my-4">
+    <div class="jumbotron py-4">
+        <table>
+            <tbody>
+            <tr th:if="${articles.empty}">
+                <td><span class="h2"> No Article Available  </span></td>
+            </tr>
+            <div th:each="article : ${articles}">
+                <tr>
+                    <td><a class="py-0 px-0 text-dark" href="#" th:href="@{~/article?id=}+${article.id}"><span class="h2" th:text="${article.title}"> Title </span></a><br/><span class="h4" th:text="${article.user.username}"> Username </span><br/><span class="h6" th:text="${article.createdAt}"> Date </span></td>
+                </tr>
+                <tr>
+                    <td><span th:utext="${#strings.abbreviate(article.articleText,1000)}"> Content </span></td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
